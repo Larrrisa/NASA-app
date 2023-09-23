@@ -109,7 +109,7 @@ export default function BasketPage({ searchParams }) {
                       />
                     ) : (
                       <Image
-                        src="/small.png"
+                        src="/big.png"
                         alt="small_asteroid"
                         width={20}
                         height={20}
