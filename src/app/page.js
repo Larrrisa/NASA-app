@@ -223,14 +223,14 @@ export default function Home() {
                       item.estimated_diameter.meters.estimated_diameter_max
                     ) > 1000 ? (
                       <Image
-                        src="/public/big.png"
+                        src="/big.png"
                         alt="asteroid_img"
                         width={45}
                         height={45}
                       />
                     ) : (
                       <Image
-                        src="/public/big.png"
+                        src="/big.png"
                         alt="asteroid_img"
                         width={30}
                         height={30}
