@@ -1,5 +1,21 @@
 .main {
-  padding: 2rem;
+  padding-top: 2rem;
+  padding-left: 20rem;
   font-size: 1rem;
   color: #ffffff;
+  background-image: url("/asteroid.png");
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-attachment: fixed;
+  line-height: 2;
+}
+
+.info {
+  padding-bottom: 1.5rem;
+}
+
+@media (max-width: 600px) {
+  .main {
+    padding-left: 2rem;
+  }
 }

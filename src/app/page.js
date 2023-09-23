@@ -16,10 +16,12 @@ export default function Home() {
       currentDate.getUTCMonth() + 1
     ).padStart(2, "0")}-${String(currentDate.getUTCDate()).padStart(2, "0")}`
   );
+
   const [fetching, setFetching] = useState(true);
   const [measures, setMeasures] = useState("kilometers");
   const [buttonStates, setButtonStates] = useState({});
   const [basket, setBasket] = useState([]);
+  const [date, setDate] = useState([]);
 
   useEffect(() => {
     if (fetching) {
@@ -34,37 +36,54 @@ export default function Home() {
             ...res.near_earth_objects[startDate],
           ]);
 
+          handleDate();
+
           setStartDate(
-            `${new Date(startDate).getFullYear()}-${String(
-              new Date(startDate).getMonth() + 1
-            ).padStart(2, "0")}-${String(
-              new Date(startDate).getDate() + 1
-            ).padStart(2, "0")}`
+            `${nextDate.getFullYear()}-${String(
+              nextDate.getMonth() + 1
+            ).padStart(2, "0")}-${String(nextDate.getDate()).padStart(2, "0")}`
           );
+
           setFetching(false);
         } catch (error) {
           console.log("ERROR", error);
           throw new Error("Failed to fetch data");
         }
       }
+
       getData();
     }
   }, [fetching]);
 
+  //handle change date in API
+  let nextDate = new Date(startDate);
+  let endDate = `${nextDate.getFullYear()}-${String(
+    nextDate.getMonth() + 1
+  ).padStart(2, "0")}-${String(nextDate.getDate()).padStart(2, "0")}`;
+
+  function handleDate() {
+    nextDate.setDate(nextDate.getDate() + 1);
+    if (
+      currentDate.getDate() ===
+      new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth() + 1,
+        0
+      ).getDate()
+    ) {
+      endDate = `${nextDate.getFullYear()}-${String(
+        nextDate.getMonth() + 1
+      ).padStart(2, "0")}-${String(nextDate.getDate()).padStart(2, "0")}`;
+    }
+  }
+
+  //handle endless scroll
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return function () {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  //date
-  const endDate = `${new Date(startDate).getFullYear()}-${String(
-    new Date(startDate).getMonth() + 1
-  ).padStart(2, "0")}-${String(new Date(startDate).getDate() + 1).padStart(
-    2,
-    "0"
-  )}`;
 
   function handleScroll(e) {
     if (
@@ -81,23 +100,29 @@ export default function Home() {
     } else setMeasures("kilometers");
   }
 
+  //handle adding items in basket and record data
   function handleOrderClick(id, e) {
+    const asteroid = asteroidsList.find((item) => item.id === id);
     if (e.target.id === id && !buttonStates[id]) {
       setButtonStates({ ...buttonStates, [id]: true });
       setBasket([...basket, e.target.id]);
+      setDate([
+        ...date,
+        {
+          id: asteroid.id,
+          date: asteroid.close_approach_data[0].close_approach_date,
+        },
+      ]);
     } else if (e.target.id === id && buttonStates[id] === true) {
       setButtonStates({ ...buttonStates, [id]: false });
       setBasket(basket.filter((item) => item !== id));
     }
   }
 
-  function shortName(item) {
-    const start = item.indexOf("(") + 1;
-    const end = item.indexOf(")");
-    const shorter = item.slice(start, end);
-    return shorter;
-  }
+  //save date and id to pass to next page
+  const dateAsString = JSON.stringify(date);
 
+  //change date spelling
   function changedData(startDate) {
     const data = startDate.split("-");
     const months = [
@@ -121,8 +146,17 @@ export default function Home() {
     return properDate;
   }
 
+  //make asteroid name shorter
+  function shortName(item) {
+    const start = item.indexOf("(") + 1;
+    const end = item.indexOf(")");
+    const shorter = item.slice(start, end);
+    return shorter;
+  }
+
+  //count items in basket
   function countBasketItems() {
-    if (basket.length >= 5 && basket.legth <= 20) {
+    if (basket.length >= 5 && basket.length <= 20) {
       return `${basket.length} астероидов`;
     } else if (String(basket.length).includes("1")) {
       return `${basket.length} астероид`;
@@ -145,24 +179,18 @@ export default function Home() {
         </div>
       </div>
       <main className={MainStyle.container}>
-        <h1 className={MainStyle.h1}>
-          Ближайшие
-          <br /> подлеты
-          <br /> астероидов
-        </h1>
+        <h1 className={MainStyle.h1}>Ближайшие подлеты астероидов</h1>
         <div className={MainStyle.measures}>
           <div
             className={`${MainStyle.measureskm} ${
-              setMeasures === "kilometers" ? MainStyle.activemesure : ""
+              measures === "kilometers" ? `${MainStyle.activemeasure}` : ""
             }`}
             onClick={handleMeasureClick}
           >
             в километрах
           </div>
           <div
-            className={`${
-              setMeasures === "lunar" ? MainStyle.activemesure : ""
-            }`}
+            className={measures === "lunar" ? `${MainStyle.activemeasure}` : ""}
             onClick={handleMeasureClick}
           >
             в лунных орбитах
@@ -173,26 +201,41 @@ export default function Home() {
           {asteroidsList.map((item) => {
             return (
               <div key={item.id} className={MainStyle.bottom}>
-                <div className={MainStyle.date}>{changedData(startDate)}</div>
+                <div className={MainStyle.date}>
+                  {changedData(item.close_approach_data[0].close_approach_date)}
+                </div>
                 <div className={MainStyle.info}>
                   <div className={MainStyle.distance}>
-                    {measures === "kilometers"
-                      ? Math.round(
-                          item.close_approach_data[0].miss_distance.kilometers
-                        ) + " км"
-                      : Math.round(
-                          item.close_approach_data[0].miss_distance.lunar
-                        ) + " лунные орбиты"}
+                    <div>
+                      {measures === "kilometers"
+                        ? Math.round(
+                            item.close_approach_data[0].miss_distance.kilometers
+                          ) + " км"
+                        : Math.round(
+                            item.close_approach_data[0].miss_distance.lunar
+                          ) + " лунные орбиты"}
+                    </div>
+                    <div className={MainStyle.line}></div>
                   </div>
 
-                  <div>
-                    <Image
-                      className={MainStyle.asteroidImg}
-                      src="/small.png"
-                      alt="small_asteroid"
-                      width={30}
-                      height={30}
-                    />
+                  <div className={MainStyle.asteroidImg}>
+                    {Math.round(
+                      item.estimated_diameter.meters.estimated_diameter_max
+                    ) > 1000 ? (
+                      <Image
+                        src="/public/big.png"
+                        alt="asteroid_img"
+                        width={45}
+                        height={45}
+                      />
+                    ) : (
+                      <Image
+                        src="/public/big.png"
+                        alt="asteroid_img"
+                        width={30}
+                        height={30}
+                      />
+                    )}
                   </div>
                   <div>
                     <div className={MainStyle.name}>
@@ -240,11 +283,11 @@ export default function Home() {
             {basket.length === 0 ? `пуста` : countBasketItems(basket)}
           </p>
         </div>
+
         <Link
           href={{
             pathname: "/final",
-            query: { basket },
-            state: { measures, shortName, startDate },
+            query: { dateAsString, measures },
           }}
           className={Basket.button}
         >

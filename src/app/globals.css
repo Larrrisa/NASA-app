@@ -22,14 +22,14 @@
 body {
   /* color: rgb(var(--foreground-rgb)); */
   background: #000000;
-  background-image: url("/planeta.png");
+  background-image: url("/planeta_big.png");
   background-repeat: no-repeat;
   background-position: left center;
   background-attachment: fixed;
 }
 
-@media (min-width: 600px) {
+@media (max-width: 600px) {
   body {
-    background-image: url("/planeta_big.png");
+    background-image: url("/planeta.png");
   }
 }

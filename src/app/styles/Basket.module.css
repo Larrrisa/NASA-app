@@ -10,6 +10,11 @@
   color: #ffffff;
 }
 
+.h1 {
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+}
+
 .countItems {
   font-size: 0.8rem;
 }
@@ -20,7 +25,7 @@
   padding: 0.8rem;
 }
 
-@media (min-width: 700px) {
+@media (min-width: 1000px) {
   .main {
     position: fixed;
     top: 10vh;
