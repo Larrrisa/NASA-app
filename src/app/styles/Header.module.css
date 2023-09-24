@@ -1,5 +1,7 @@
 .container {
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
 }
 .header {
   font-size: 2rem; /*1rem=16px*/
@@ -13,12 +15,5 @@
   font-size: 1rem;
   color: #ffffff;
   line-height: 0.3;
-}
-
-@media (min-width: 375px) {
-  .container {
-    display: flex;
-    justify-content: start;
-    flex-direction: column;
-  }
+  padding-bottom: 1.5rem;
 }

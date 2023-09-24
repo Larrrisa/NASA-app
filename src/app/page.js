@@ -36,8 +36,6 @@ export default function Home() {
             ...res.near_earth_objects[startDate],
           ]);
 
-          handleDate();
-
           setStartDate(
             `${nextDate.getFullYear()}-${String(
               nextDate.getMonth() + 1
@@ -60,22 +58,7 @@ export default function Home() {
   let endDate = `${nextDate.getFullYear()}-${String(
     nextDate.getMonth() + 1
   ).padStart(2, "0")}-${String(nextDate.getDate()).padStart(2, "0")}`;
-
-  function handleDate() {
-    nextDate.setDate(nextDate.getDate() + 1);
-    if (
-      currentDate.getDate() ===
-      new Date(
-        currentDate.getFullYear(),
-        currentDate.getMonth() + 1,
-        0
-      ).getDate()
-    ) {
-      endDate = `${nextDate.getFullYear()}-${String(
-        nextDate.getMonth() + 1
-      ).padStart(2, "0")}-${String(nextDate.getDate()).padStart(2, "0")}`;
-    }
-  }
+  nextDate.setDate(nextDate.getDate() + 1);
 
   //handle endless scroll
   useEffect(() => {
@@ -174,8 +157,8 @@ export default function Home() {
       <div className={HeaderStyle.container}>
         <div className={HeaderStyle.header}>Armageddon 2023</div>
         <div>
-          <p className={HeaderStyle.text}>ООО “Команда им. Б. Уиллиса”</p>.
-          <p className={HeaderStyle.text}>Взрываем астероиды с 1998 года.</p>
+          <p className={HeaderStyle.text}>ООО “Команда им. Б. Уиллиса”</p>
+          <p className={HeaderStyle.text}>Взрываем астероиды с 1998 года</p>
         </div>
       </div>
       <main className={MainStyle.container}>

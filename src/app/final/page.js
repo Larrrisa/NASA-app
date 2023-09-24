@@ -62,8 +62,10 @@ export default function BasketPage({ searchParams }) {
     <div>
       <div className={HeaderStyle.container}>
         <div className={HeaderStyle.header}>Armageddon 2023</div>
-        <p className={HeaderStyle.text}>ООО “Команда им. Б. Уиллиса”</p>.
-        <p className={HeaderStyle.text}>Взрываем астероиды с 1998 года.</p>
+        <div>
+          <p className={HeaderStyle.text}>ООО “Команда им. Б. Уиллиса”</p>
+          <p className={HeaderStyle.text}>Взрываем астероиды с 1998 года</p>
+        </div>
       </div>
       <main className={MainStyle.container}>
         <h1 className={BasketStyle.h1}>Заказ отправлен!</h1>
@@ -98,21 +100,22 @@ export default function BasketPage({ searchParams }) {
                     <div className={MainStyle.line}></div>
                   </div>
                   <div className={MainStyle.asteroidImg}>
-                    {Math.round(
+                    {item.estimated_diameter.meters.estimated_diameter_max &&
+                    Math.round(
                       item.estimated_diameter.meters.estimated_diameter_max
                     ) > 1000 ? (
                       <Image
                         src="/big.png"
-                        alt="small_asteroid"
+                        alt="asteroid_img"
                         width={45}
                         height={45}
                       />
                     ) : (
                       <Image
                         src="/big.png"
-                        alt="small_asteroid"
-                        width={20}
-                        height={20}
+                        alt="asteroid_img"
+                        width={30}
+                        height={30}
                       />
                     )}
                   </div>
