@@ -1,8 +1,8 @@
-#HTML/CSS/React/Next
+# HTML/CSS/React/Next
 
-App shows information about asteroids.
+App displays information about asteroids.
 
-##Features:
+## Features:
 *Data loads on scroll.
 *Click on an asteroid name to view information about it. 
 *You can choose to measure distances in kilometers or as a distance to the Moon.
