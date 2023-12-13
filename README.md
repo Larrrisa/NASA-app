@@ -1,4 +1,5 @@
-# HTML/CSS/React/Next
+# NASA application
+## HTML/CSS/React/Next
 
 App displays information about asteroids.
 
