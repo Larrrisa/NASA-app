@@ -7,8 +7,10 @@ import HeaderStyle from "./styles/Header.module.css";
 import MainStyle from "./styles/Main.module.css";
 import Basket from "./styles/Basket.module.css";
 import Image from "next/image";
+import shortName from "./utils/shortName";
+import changedData from "./utils/changeData";
 
-export default function Home() {
+export default function HomePage() {
   const currentDate = new Date();
   const [asteroidsList, setAsteroidsList] = useState([]);
   const [startDate, setStartDate] = useState(
@@ -104,38 +106,6 @@ export default function Home() {
 
   //save date and id to pass to next page
   const dateAsString = JSON.stringify(date);
-
-  //change date spelling
-  function changedData(startDate) {
-    const data = startDate.split("-");
-    const months = [
-      "янв",
-      "фев",
-      "мар",
-      "апр",
-      "мая",
-      "июня",
-      "июля",
-      "авг",
-      "сент",
-      "окт",
-      "нояб",
-      "дек",
-    ];
-    const day = data[2];
-    const month = months[parseInt(data[1]) - 1];
-    const year = data[0];
-    const properDate = `${day + " "}${month + " "}${year}`;
-    return properDate;
-  }
-
-  //make asteroid name shorter
-  function shortName(item) {
-    const start = item.indexOf("(") + 1;
-    const end = item.indexOf(")");
-    const shorter = item.slice(start, end);
-    return shorter;
-  }
 
   //count items in basket
   function countBasketItems() {

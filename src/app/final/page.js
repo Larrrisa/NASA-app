@@ -1,11 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-
 import MainStyle from "../styles/Main.module.css";
 import BasketStyle from "../styles/Basket.module.css";
 import HeaderStyle from "../styles/Header.module.css";
 import Image from "next/image";
+import shortName from "../utils/shortName";
+import changedData from "../utils/changeData";
 
 export default function BasketPage({ searchParams }) {
   const [finalBasket, setFinalBasket] = useState([]);
@@ -26,37 +27,6 @@ export default function BasketPage({ searchParams }) {
 
     fetchData();
   }, [dates]);
-
-  function shortName(item) {
-    const start = item.indexOf("(") + 1;
-    const end = item.indexOf(")");
-    const shorter = item.slice(start, end);
-    return shorter;
-  }
-
-  function changedData(item) {
-    const data = item.split("-");
-    const months = [
-      "янв",
-      "фев",
-      "мар",
-      "апр",
-      "мая",
-      "июня",
-      "июля",
-      "авг",
-      "сент",
-      "окт",
-      "нояб",
-      "дек",
-    ];
-    const day = data[2];
-    const month = months[parseInt(data[1]) - 1];
-    const year = data[0];
-    const properDate = `${day + " "}${month + " "}${year}`;
-
-    return properDate;
-  }
 
   return (
     <div>

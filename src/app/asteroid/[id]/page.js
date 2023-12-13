@@ -2,7 +2,7 @@
 
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import MainStyle from "src/app/styles/Main.module.css";
+import MainStyle from "src/app/styles/Asteroid.module.css";
 import Asteroid from "src/app/styles/Asteroid.module.css";
 
 export default function AsteroidPage() {
