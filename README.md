@@ -4,7 +4,7 @@
 App displays information about asteroids.
 
 ## Features:
-*Data loads on scroll.  
+*Infinite scroll.  
 *Click on an asteroid name to view information about it.   
 *You can choose to measure distances in kilometers or as a distance to the Moon.  
 *Add asteroids to your basket.  
