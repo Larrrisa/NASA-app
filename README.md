@@ -1,6 +1,6 @@
 # NASA application
 ## Built with HTML/CSS/Next
-## Link (works with VPN) - (nasa-app-rosy.vercel.app/)[nasa-app-rosy.vercel.app/]
+## Link (works with VPN) -[https://nasa-app-rosy.vercel.app](https://nasa-app-rosy.vercel.app/)
 App displays information about asteroids.
 
 ## Features:
